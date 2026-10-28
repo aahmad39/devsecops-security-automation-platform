@@ -55,12 +55,12 @@ flowchart TD
         WorkloadID["Azure Workload Identity\n(Managed Identity OIDC)"]
     end
 
-    Auditor -->|1. GET /share/:token?password=***| Ingress
-    SecTeam -->|2. POST /scans/:id/share (Bearer Token)| Ingress
+    Auditor -->|"1. GET /share/:token"| Ingress
+    SecTeam -->|"2. POST /scans/:id/share [Bearer Auth]"| Ingress
     Ingress --> NetPol --> FastAPI
     FastAPI --> AuthEngine --> SQLite
-    FastAPI -.->|Async Event Webhook| Notify
-    KeyVault -.->|Dynamic Secret Injection| WorkloadID -.-> FastAPI
+    FastAPI -.->|"Async Event Webhook"| Notify
+    KeyVault -.->|"Dynamic Secret Injection"| WorkloadID -.-> FastAPI
 ```
 
 ---
